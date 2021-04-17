@@ -28,4 +28,9 @@ public class EmailProvider {
         this.password = password;
         this.emailPostfix = emailPostfix;
     }
+
+    @Override
+    public String toString() {
+        return "EmailProvider(" + "serverAddress: " + this.serverAddress + ", username: " + this.username + ", password: " + this.password + ", emailPostfix: " + this.emailPostfix + ")";
+    }
 }

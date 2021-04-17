@@ -21,11 +21,11 @@ public class EmailsService {
         return providerName.toLowerCase(Locale.ROOT);
     }
 
-    public void sendEmail(String providerName, SendEmailForm emailConfig) {
+    public void sendEmail(String providerName, SendEmailForm emailConfig) throws InterruptedException {
         EmailProvider provider = this.providersByName.get(providerName);
-
-        // Todo separate payload and parameter types
-
-        // ...sends the email
+        Runnable sendEmailWorker = new SendEmailWorker(provider);
+        Thread sendEmailJob = new Thread(sendEmailWorker);
+        sendEmailJob.start();
+        sendEmailJob.join();
     }
 }
