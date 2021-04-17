@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+<head>
+    <meta charset="UTF-8">
+    <title>Emails client</title>
+</head>
+<form action="#" th:action="@{/api/emails/send}" th:object="${sendEmailForm}" method="post">
+    <table>
+        <tr>
+            <td>From:</td>
+            <td><input type="email" th:field="*{from}" /></td>
+            <td th:if="${#fields.hasErrors('from')}" th:errors="*{from}">From Error</td>
+        </tr>
+        <tr>
+            <td>To:</td>
+            <td><input type="email" th:field="*{to}" /></td>
+            <td th:if="${#fields.hasErrors('to')}" th:errors="*{to}">To Error</td>
+        </tr>
+        <tr>
+            <td>Body:</td>
+            <td><textarea th:field="*{body}"></textarea></td>
+            <td th:if="${#fields.hasErrors('body')}" th:errors="*{body}">Body Error</td>
+        </tr>
+        <tr>
+            <td><button type="submit">Submit</button></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
