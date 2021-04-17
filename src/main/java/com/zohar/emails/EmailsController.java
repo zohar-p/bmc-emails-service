@@ -23,6 +23,7 @@ public class EmailsController implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/success").setViewName("success");
+        registry.addViewController("/failure").setViewName("failure");
     }
 
     @GetMapping("/")
@@ -35,8 +36,13 @@ public class EmailsController implements WebMvcConfigurer {
         if (bindingResult.hasErrors()) {
             return "form";
         }
-        String providerName = emailsService.determineProvider(sendEmailForm.getFrom());
-        emailsService.sendEmail(providerName, sendEmailForm);
-        return "redirect:/success?providerName=" + providerName;
+        try {
+            String providerName = emailsService.determineProvider(sendEmailForm.getFrom());
+            emailsService.sendEmail(providerName, sendEmailForm);
+            return "redirect:/success?providerName=" + providerName;
+        } catch (Exception error) {
+            return "redirect:/failure";
+        }
+
     }
 }
